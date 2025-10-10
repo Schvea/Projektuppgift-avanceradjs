@@ -19,6 +19,9 @@ app.use('/api/auth', authRoutes);
 const loginRoute = require('./routes/login');
 app.use('/api', loginRoute);
 
+const testRoute = require('./routes/test');
+app.use('/api', testRoute);
+
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
   console.log('MongoDB works');
