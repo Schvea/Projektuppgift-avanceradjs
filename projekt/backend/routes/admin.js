@@ -21,5 +21,27 @@ router.delete('/users/:id', authenticate, checkAdmin, async (req, res) => {
     res.status(500).json({ error: 'Kunde inte radera användare' });
   }
 });
+router.patch('/users/:id/role', authenticate, checkAdmin, async (req, res) => {
+  try {
+    const { role } = req.body;
 
+    if (!role) {
+      return res.status(400).json({ error: 'Roll krävs för att uppdatera roll' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { role },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'Användare hittades inte' });
+    }
+
+    res.json({ message: 'Roll uppdaterad', user: updatedUser });
+  } catch (err) {
+    res.status(500).json({ error: 'Kunde inte uppdatera roll' });
+  }
+});
 module.exports = router;
