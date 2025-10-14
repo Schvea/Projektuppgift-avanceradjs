@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -24,6 +25,7 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '3h' }
     );
+ 
     //Svar
     return res.status(200).json({
       message: "Inloggad",
