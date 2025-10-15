@@ -32,4 +32,27 @@ router.get('/tasks', authenticate, async (req, res) => {
     res.status(500).json({ error: 'Kunde inte hämta sysslor' });
   }
 });
+
+router.patch('/tasks/:id/assign', authenticate, async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ error: 'Uppgift finns inte' });
+    }
+
+    if (task.assignedTo) {
+      return res.status(400).json({ error: 'Uppgiften är tagen av ngn annan' });
+    }
+
+    task.assignedTo = req.user.id;
+    await task.save();
+
+    res.json({ message: 'Du har tagit uppgiften', task });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'fel' });
+  }
+});
+
 module.exports = router;
