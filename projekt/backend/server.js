@@ -26,6 +26,9 @@ app.use('/api', testRoute);
 const adminRoutes = require('./routes/admin');
 app.use('/api/admin', adminRoutes);
 
+const taskRoute = require('./routes/tasks')
+app.use('/api', taskRoute);
+
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
   console.log('MongoDB works');
