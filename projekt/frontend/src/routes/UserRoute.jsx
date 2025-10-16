@@ -1,12 +1,16 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PanelPage from '../pages/PanelPage';
 import TaskList from '../pages/TaskList';
+import UserManagement from '../pages/UserManagement';
 
-export default function UserRoutes() {
+function UserRoute() {
   return (
-    <Routes>
+    <>
       <Route path="/panel" element={<PanelPage />} />
       <Route path="/tasks" element={<TaskList />} />
-    </Routes>
+      <Route path="/users" element={<UserManagement />} />
+    </>
   );
 }
+
+export default UserRoute;
