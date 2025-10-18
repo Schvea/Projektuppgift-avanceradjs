@@ -1,12 +1,14 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PanelPage from '../pages/PanelPage';
 import TaskList from '../pages/TaskList';
+import UserManagement from '../pages/UserManagement';
 
-export default function UserRoutes() {
-  return (
-    <Routes>
-      <Route path="/panel" element={<PanelPage />} />
-      <Route path="/tasks" element={<TaskList />} />
-    </Routes>
-  );
-}
+export const userRoutes = (
+  <>
+    <Route path="/panel" element={<PanelPage />} />
+    <Route path="/tasks" element={<TaskList />} />
+    <Route path="/users" element={<UserManagement />} />
+  </>
+);
+
+export default userRoutes;
