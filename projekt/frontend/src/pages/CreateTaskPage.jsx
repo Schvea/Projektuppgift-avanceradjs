@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CreateTaskPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [message, setMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +31,7 @@ const res = await fetch('http://localhost:5000/api/tasks', {
         setTitle('');
         setDescription('');
         setDate('');
+        setTimeout(() => navigate('/tasks'), 2000);
       } else {
         setMessage(data.error || 'Fel vid skapande av uppgift.');
       }
