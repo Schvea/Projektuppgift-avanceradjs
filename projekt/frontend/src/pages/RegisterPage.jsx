@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -20,6 +23,7 @@ function RegisterPage() {
 
       if (res.ok) {
         setMessage('Du är nu registrerad');
+        setTimeout(() => navigate('/'), 2000);
       } else {
         setMessage(data.error || 'Fel vid registrering');
       }
