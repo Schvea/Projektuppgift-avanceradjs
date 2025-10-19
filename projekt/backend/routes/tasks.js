@@ -25,7 +25,7 @@ router.post('/tasks', authenticate, async (req, res) => {
 });
 router.get('/tasks', authenticate, async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find().populate('assignedTo', 'username');
     res.json(tasks);
   } catch (err) {
     console.error(err);
@@ -51,7 +51,7 @@ router.patch('/tasks/:id/assign', authenticate, async (req, res) => {
     res.json({ message: 'Du har tagit uppgiften', task });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'fel' });
+    res.status(500).json({ error: 'fel på n' });
   }
 });
 
