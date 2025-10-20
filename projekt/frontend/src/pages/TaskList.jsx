@@ -6,6 +6,7 @@ function TaskList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null); 
+  const [searchTerm, setSearchTerm] = useState('');
 
   const navigate = useNavigate();
 
@@ -93,9 +94,23 @@ function TaskList() {
       }}>
         Tillbaka
       </button>
+
+      <input
+      type="text"
+      placeholder="Sök efter titel eller beskrivning"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      style={{ marginBottom: '1rem', padding: '0.5rem', width: '100%' }}
+      />
+
       <ul>
         {tasks.length === 0 && <li>Inga uppgifter finns</li>}
-        {tasks.map(task => (
+        {tasks
+        .filter(task =>
+          task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (task.description && task.description.toLowerCase().includes(searchTerm.toLowerCase()))
+        )
+        .map(task => (
           <li key={task._id} style={{ marginBottom: '1rem' }}>
             <strong>{task.title}</strong> - {task.description || 'Ingen beskrivning'}
             <br />
