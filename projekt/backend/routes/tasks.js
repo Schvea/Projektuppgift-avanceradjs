@@ -47,8 +47,8 @@ router.patch('/tasks/:id/assign', authenticate, async (req, res) => {
 
     task.assignedTo = req.user.id;
     await task.save();
-
-    res.json({ message: 'Du har tagit uppgiften', task });
+    const populatedTask = await task.populate('assignedTo', 'username');
+    res.json({ message: 'Du har tagit uppgiften', task: populatedTask })
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'fel på n' });
