@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function CreateTaskPage() {
@@ -6,23 +6,31 @@ function CreateTaskPage() {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [message, setMessage] = useState('');
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token');
 
-const res = await fetch('http://localhost:5000/api/tasks', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
-  },
-  body: JSON.stringify({ title, description, date }),
-});
+      const res = await fetch('http://localhost:5000/api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, description, date }),
+      });
 
       const data = await res.json();
 
@@ -44,6 +52,17 @@ const res = await fetch('http://localhost:5000/api/tasks', {
   return (
     <div>
       <h2>Skapa ny uppgift</h2>
+
+      <button onClick={() => {
+        if (user?.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/panel');
+        }
+      }}>
+        Tillbaka
+      </button>
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -64,6 +83,7 @@ const res = await fetch('http://localhost:5000/api/tasks', {
         />
         <button type="submit">Skapa uppgift</button>
       </form>
+
       {message && <p>{message}</p>}
     </div>
   );
