@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null); 
+
+  const navigate = useNavigate();
+
 
   useEffect(() => {
  
@@ -79,6 +83,16 @@ function TaskList() {
   return (
     <div>
       <h2>Alla uppgifter</h2>
+
+        <button onClick={() => {
+        if (user?.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/panel');
+        }
+      }}>
+        Tillbaka
+      </button>
       <ul>
         {tasks.length === 0 && <li>Inga uppgifter finns</li>}
         {tasks.map(task => (
