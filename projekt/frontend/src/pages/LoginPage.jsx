@@ -22,16 +22,21 @@ function LoginPage() {
 
       if (res.ok) {
         localStorage.setItem('token', data.token);
-        navigate('/panel');
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
+      if (data.user.role === 'admin') {
+        navigate('/admin');
       } else {
-        setMessage(data.error || 'Fel vid inlog');
+        navigate('/panel');
       }
-    } catch (error) {
-      console.error('Fel vid inlog', error);
-      setMessage('Serverfel.');
+    } else {
+      setMessage(data.error || 'Fel vid inlog');
     }
-  };
-
+  } catch (error) {
+    console.error('Fel vid inlog', error);
+    setMessage('Serverfel.');
+  }
+};
   return (
     <div>
       <h2>Logga in</h2>
