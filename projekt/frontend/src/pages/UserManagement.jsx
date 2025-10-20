@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
+
+    const navigate = useNavigate();
 
   const fetchUsers = async () => {
     try {
@@ -88,6 +91,7 @@ function UserManagement() {
   return (
     <div>
       <h2>Användare</h2>
+      <button onClick={() => navigate('/admin')}>Tillbaka</button>
       <table>
         <thead>
           <tr>
