@@ -38,7 +38,7 @@ function LoginPage() {
   }
 };
   return (
-    <div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <h2>Logga in</h2>
       <form onSubmit={handleLogin}>
         <input
@@ -55,7 +55,8 @@ function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Logga in</button>
+        <button className="btn" type="submit">Logga in</button>
+
       </form>
       {message && <p>{message}</p>}
     </div>
