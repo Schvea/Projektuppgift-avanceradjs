@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import userRoutes from './routes/UserRoute'
 import adminRoutes from './routes/AdminRoute'
+import './index.css'
 
 function App() {
   return (
