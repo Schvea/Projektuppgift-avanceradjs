@@ -37,28 +37,37 @@ function LoginPage() {
     setMessage('Serverfel.');
   }
 };
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h2>Logga in</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Användarnamn"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Lösenord"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button className="btn" type="submit">Logga in</button>
+   return (
+    <div className="setup">
+      <div className="w-full max-w-sm p-8 bg-white rounded shadow flex flex-col">
+        <h2 className="title">Logga in</h2>
 
-      </form>
-      {message && <p>{message}</p>}
+        <form onSubmit={handleLogin} className="flex flex-col space-y-4">
+          <input
+            type="text"
+            placeholder="Användarnamn"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-full px-4 py-2 border rounded"
+          />
+          <input
+            type="password"
+            placeholder="Lösenord"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full px-4 py-2 border rounded"
+          />
+          <button
+            type="submit"
+            className="btn"
+          >
+            Logga in
+          </button>
+          {message && <p className="text-red-600 text-sm">{message}</p>}
+        </form>
+      </div>
     </div>
   );
 }

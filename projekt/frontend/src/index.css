@@ -72,5 +72,14 @@ button:focus-visible {
 }
 */
 .btn {
-  @apply px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700;
+  @apply px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700
+}
+.title{
+  @apply text-2xl font-bold mb-6 text-center
+}
+.setup{
+  @apply min-h-screen flex items-center justify-center bg-sky-100
+}
+.panel-btn {
+   @apply px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700
 }
