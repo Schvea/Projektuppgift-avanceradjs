@@ -34,15 +34,18 @@ function RegisterPage() {
   };
 
   return (
-    <div>
-      <h2>Registrera konto</h2>
-      <form onSubmit={handleRegister}>
+    <div className="setup">
+    <div className="w-full max-w-sm p-8 bg-white rounded shadow flex flex-col">
+      <h2 className="title">Registrera konto</h2>
+
+      <form className="flex flex-col space-y-4" onSubmit={handleRegister}>
         <input
           type="text"
           placeholder="Användarnamn"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+          className="w-full px-4 py-2 border rounded"
         />
         <input
           type="email"
@@ -50,6 +53,7 @@ function RegisterPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="w-full px-4 py-2 border rounded"
         />
         <input
           type="password"
@@ -57,10 +61,12 @@ function RegisterPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className="w-full px-4 py-2 border rounded"
         />
-        <button type="submit">Skapa konto</button>
+        <button className='panel-btn' type="submit">Skapa konto</button>
       </form>
       {message && <p>{message}</p>}
+    </div>
     </div>
   );
 }
