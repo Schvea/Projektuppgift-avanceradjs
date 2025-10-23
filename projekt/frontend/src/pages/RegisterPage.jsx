@@ -64,6 +64,7 @@ function RegisterPage() {
           className="w-full px-4 py-2 border rounded"
         />
         <button className='panel-btn' type="submit">Skapa konto</button>
+        <button className="panel-btn" onClick={() => navigate('/')}>Logga in på befintligt konto</button>
       </form>
       {message && <p>{message}</p>}
     </div>
