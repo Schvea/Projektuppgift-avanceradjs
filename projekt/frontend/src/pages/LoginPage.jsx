@@ -65,6 +65,7 @@ function LoginPage() {
           >
             Logga in
           </button>
+        <button className="panel-btn" onClick={() => navigate('/register')}>Registrera nytt konto</button>
           {message && <p className="text-red-600 text-sm">{message}</p>}
         </form>
       </div>
