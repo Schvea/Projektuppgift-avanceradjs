@@ -81,53 +81,54 @@ function TaskList() {
   if (loading) return <p>Laddar uppgifter</p>;
   if (error) return <p>Fel: {error}</p>;
 
-  return (
-    <div>
-      <h2>Alla uppgifter</h2>
+return (
+  <div className="setup relative min-h-screen w-full">
+    <button className="panel-btn absolute top-4 left-4 z-10" onClick={() => {
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/panel');
+      }
+    }}>
+      Tillbaka
+    </button>
 
-        <button onClick={() => {
-        if (user?.role === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/panel');
-        }
-      }}>
-        Tillbaka
-      </button>
+    <div className="w-full max-w-sm p-8 bg-white rounded shadow flex flex-col mx-auto mt-30">
+      <h2 className="title text-center text-2xl font-bold w-full mb-6">Alla uppgifter</h2>
 
       <input
-      type="text"
-      placeholder="Sök efter titel eller beskrivning"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      style={{ marginBottom: '1rem', padding: '0.5rem', width: '100%' }}
+        type="text"
+        placeholder="Sök efter titel eller beskrivning"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className='border-2 border-solid m-1'
       />
 
       <ul>
         {tasks.length === 0 && <li>Inga uppgifter finns</li>}
         {tasks
-        .filter(task =>
-          task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (task.description && task.description.toLowerCase().includes(searchTerm.toLowerCase()))
-        )
-        .map(task => (
-          <li key={task._id} style={{ marginBottom: '1rem' }}>
-            <strong>{task.title}</strong> - {task.description || 'Ingen beskrivning'}
-            <br />
-            Datum: {task.date ? new Date(task.date).toLocaleDateString() : 'Inget datum är bestämt ännu'}
-            <br />
-            {task.assignedTo ? (
-              <em>Tagen av: {task.assignedTo.username || 'okänd användare'}</em>
-            ) : (
-              <button onClick={() => handleAssignTask(task._id)}>
-                Ta uppgiften
-              </button>
-            )}
-          </li>
-        ))}
+          .filter(task =>
+            task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (task.description && task.description.toLowerCase().includes(searchTerm.toLowerCase()))
+          )
+          .map(task => (
+            <li key={task._id} style={{ marginBottom: '1rem' }}>
+              <strong>{task.title}</strong> - {task.description || 'Ingen beskrivning'}
+              <br />
+              Datum: {task.date ? new Date(task.date).toLocaleDateString() : 'Inget datum är bestämt ännu'}
+              <br />
+              {task.assignedTo ? (
+                <em>Tagen av: {task.assignedTo.username || 'okänd användare'}</em>
+              ) : (
+                <button className='panel-btn' onClick={() => handleAssignTask(task._id)}>
+                  Ta uppgiften
+                </button>
+              )}
+            </li>
+          ))}
       </ul>
     </div>
-  );
+  </div>
+);
 }
-
 export default TaskList;

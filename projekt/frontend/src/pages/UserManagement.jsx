@@ -89,10 +89,15 @@ function UserManagement() {
   if (error) return <p>Fel {error}</p>;
 
   return (
-    <div>
-      <h2>Användare</h2>
-      <button onClick={() => navigate('/admin')}>Tillbaka</button>
-      <table>
+    <div className="setup relative min-h-screen w-full bg-sky-100 p-6">
+
+      <button className="panel-btn absolute top-4 left-4 z-10" onClick={() => navigate('/admin')}>Tillbaka</button>
+      
+      <div className="max-w-4xl mx-auto p-8 bg-white rounded shadow">
+        <h2 className="title text-center text-2xl font-bold w-full mb-6">Användare</h2>
+
+      <table className="w-full table-fixed border-collapse">
+
         <thead>
           <tr>
             <th>Namn</th>
@@ -103,19 +108,20 @@ function UserManagement() {
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
+              <td className='border-2 border-solid m-1'>{user.username}</td>
+              <td className='border-2 border-solid m-1'>{user.email}</td>
+              <td className='border-2 border-solid m-1'>{user.role}</td>
               <td>
-                <button onClick={() => handleRoleChange(user._id, user.role)}>
+                <button className='panel-btn font-mono px-3 py-1 text-sm' onClick={() => handleRoleChange(user._id, user.role)}>
                   Byt till {user.role === 'user' ? 'admin' : 'user'}
                 </button>
-                <button onClick={() => handleDelete(user._id)}>Radera</button>
+                <button className='log-out-btn w-25 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 m-1' onClick={() => handleDelete(user._id)}>Radera</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }

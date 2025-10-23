@@ -50,43 +50,52 @@ function CreateTaskPage() {
   };
 
   return (
-    <div>
-      <h2>Skapa ny uppgift</h2>
+  <div className="setup relative min-h-screen">
 
-      <button onClick={() => {
+    <button
+      className="panel-btn absolute top-4 left-4 z-10"
+      onClick={() => {
         if (user?.role === 'admin') {
           navigate('/admin');
         } else {
           navigate('/panel');
         }
-      }}>
-        Tillbaka
-      </button>
+      }}
+    >
+      Tillbaka
+    </button>
 
-      <form onSubmit={handleSubmit}>
+    <div className="w-full max-w-sm p-8 bg-white rounded shadow flex flex-col mx-auto mt-16">
+      <h2 className="title">Skapa ny uppgift</h2>
+
+      <form className="flex flex-col" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Titel"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          className='text-center border-2 border-solidm-1'
         />
         <textarea
           placeholder="Beskrivning"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className='text-center border-2 border-solid m-1'
         />
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          className=' border-2 border-solid m-1'
         />
-        <button type="submit">Skapa uppgift</button>
+        <button className="panel-btn" type="submit">Skapa uppgift</button>
       </form>
 
       {message && <p>{message}</p>}
     </div>
-  );
+  </div>
+);
 }
 
 export default CreateTaskPage;
