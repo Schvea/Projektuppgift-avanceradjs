@@ -54,5 +54,20 @@ router.patch('/tasks/:id/assign', authenticate, async (req, res) => {
     res.status(500).json({ error: 'fel på n' });
   }
 });
+router.delete('/tasks/:id', authenticate, async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ error: 'Uppgift finns inte' });
+    }
+    await Task.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Uppgift raderad' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Kunde inte radera uppgift' });
+  }
+});
+
 
 module.exports = router;
