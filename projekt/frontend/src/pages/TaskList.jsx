@@ -78,6 +78,35 @@ function TaskList() {
     }
   };
 
+  const handleDelete = async (taskid) => {
+    const token = localStorage.getItem('token');
+    if (!window.confirm('Vill du ta bort uppgiften?')) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/tasks/${taskid}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.error || 'Kunde inte radera uppgift');
+        return;
+      }
+
+      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskid));
+
+      alert('Uppgiften har raderats');
+    } catch (err) {
+      console.error('Fel vid radering', err);
+      alert('Något gick fel vid radering');
+    }
+  };
+
+
   if (loading) return <p>Laddar uppgifter</p>;
   if (error) return <p>Fel: {error}</p>;
 
@@ -118,11 +147,30 @@ return (
               Datum: {task.date ? new Date(task.date).toLocaleDateString() : 'Inget datum är bestämt ännu'}
               <br />
               {task.assignedTo ? (
-                <em>Tagen av: {task.assignedTo.username || 'okänd användare'}</em>
+                <>
+                  <em>Tagen av: {task.assignedTo.username || 'okänd användare'}</em>
+                  <button
+                    className='log-out-btn w-25 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 m-1'
+                    onClick={() => handleDelete(task._id)}
+                  >
+                    Radera
+                  </button>
+                </>
               ) : (
-                <button className='panel-btn' onClick={() => handleAssignTask(task._id)}>
+              <>
+                <button
+                  className='panel-btn'
+                  onClick={() => handleAssignTask(task._id)}
+                >
                   Ta uppgiften
                 </button>
+                <button
+                  className='log-out-btn w-25 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 m-1'
+                  onClick={() => handleDelete(task._id)}
+                >
+                  Radera
+                </button>
+              </>
               )}
             </li>
           ))}
