@@ -5,7 +5,7 @@ function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  
+
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -23,21 +23,21 @@ function LoginPage() {
       if (res.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
-        
-      if (data.user.role === 'admin') {
-        navigate('/admin');
+
+        if (data.user.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/panel');
+        }
       } else {
-        navigate('/panel');
+        setMessage(data.error || 'Fel vid inlog');
       }
-    } else {
-      setMessage(data.error || 'Fel vid inlog');
+    } catch (error) {
+      console.error('Fel vid inlog', error);
+      setMessage('Serverfel.');
     }
-  } catch (error) {
-    console.error('Fel vid inlog', error);
-    setMessage('Serverfel.');
-  }
-};
-   return (
+  };
+  return (
     <div className="setup">
       <div className="w-full max-w-sm p-8 bg-white rounded shadow flex flex-col">
         <h2 className="title">Logga in</h2>
@@ -59,14 +59,13 @@ function LoginPage() {
             required
             className="w-full px-4 py-2 border rounded"
           />
-          <button
-            type="submit"
-            className="btn"
-          >
+          <button type="submit" className="btn">
             Logga in
           </button>
-                  <p className="text-center">Har du inget konto?</p>
-        <button className="panel-btn" onClick={() => navigate('/register')}>Registrera nytt konto</button>
+          <p className="text-center">Har du inget konto?</p>
+          <button className="panel-btn" onClick={() => navigate('/register')}>
+            Registrera nytt konto
+          </button>
           {message && <p className="text-red-600 text-sm">{message}</p>}
         </form>
       </div>
