@@ -10,9 +10,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Api is working');
-});
 
 const authRoutes = require('./routes/auth');
 
@@ -34,7 +31,7 @@ const taskRoute = require('./routes/tasks');
 
 app.use('/api', taskRoute);
 
-app.use(express.static(path.join(__dirname, '..frontend/dist')));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
