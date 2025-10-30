@@ -11,7 +11,7 @@ function UserManagement() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users', {
+      const res = await fetch('/api/admin/users', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -38,7 +38,7 @@ function UserManagement() {
     if (!window.confirm('Vill du radera användaren')) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+      const res = await fetch(`/api/admin/users/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ function UserManagement() {
     const newRole = currentRole === 'user' ? 'admin' : 'user';
 
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${id}/role`, {
+      const res = await fetch(`/api/admin/users/${id}/role`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

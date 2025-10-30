@@ -25,7 +25,7 @@ function TaskList() {
       }
 
       try {
-        const res = await fetch('http://localhost:5000/api/tasks', {
+        const res = await fetch('/api/tasks', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,7 +50,7 @@ function TaskList() {
   const handleAssignTask = async (taskId) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:5000/api/tasks/${taskId}/assign`, {
+      const res = await fetch(`/api/tasks/${taskId}/assign`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ function TaskList() {
         return;
       }
 
-      const updatedTasks = await fetch('http://localhost:5000/api/tasks', {
+      const updatedTasks = await fetch('/api/tasks', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,7 +80,7 @@ function TaskList() {
     if (!window.confirm('Vill du ta bort uppgiften?')) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/tasks/${taskid}`, {
+      const res = await fetch(`/api/tasks/${taskid}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

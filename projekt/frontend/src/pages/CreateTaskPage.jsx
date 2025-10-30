@@ -23,7 +23,7 @@ function CreateTaskPage() {
     try {
       const token = localStorage.getItem('token');
 
-      const res = await fetch('http://localhost:5000/api/tasks', {
+      const res = await fetch('/api/tasks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
