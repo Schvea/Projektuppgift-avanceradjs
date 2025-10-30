@@ -1,6 +1,5 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const router = express.Router();
@@ -19,9 +18,9 @@ router.post('/register', async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: 'Email finns' });
     }
-    
     const hashedPassword = await bcrypt.hash(password, 10);
-    //skapa
+
+    // skapa
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 
@@ -31,6 +30,5 @@ router.post('/register', async (req, res) => {
     return res.status(500).json({ message: 'fel', error: err.message });
   }
 });
-
 
 module.exports = router;

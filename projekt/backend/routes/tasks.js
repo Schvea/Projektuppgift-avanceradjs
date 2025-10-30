@@ -14,22 +14,22 @@ router.post('/tasks', authenticate, async (req, res) => {
     const newTask = new Task({
       title,
       description,
-      date
+      date,
     });
     const savedTask = await newTask.save();
-    res.status(201).json(savedTask);
+    return res.status(201).json(savedTask);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'du gör fel' });
+    return res.status(500).json({ error: 'du gör fel' });
   }
 });
 router.get('/tasks', authenticate, async (req, res) => {
   try {
     const tasks = await Task.find().populate('assignedTo', 'username');
-    res.json(tasks);
+    return res.json(tasks);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Kunde inte hämta sysslor' });
+    return res.status(500).json({ error: 'Kunde inte hämta sysslor' });
   }
 });
 
@@ -48,10 +48,10 @@ router.patch('/tasks/:id/assign', authenticate, async (req, res) => {
     task.assignedTo = req.user.id;
     await task.save();
     const populatedTask = await task.populate('assignedTo', 'username');
-    res.json({ message: 'Du har tagit uppgiften', task: populatedTask })
+    return res.json({ message: 'Du har tagit uppgiften', task: populatedTask });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'fel på n' });
+    return res.status(500).json({ error: 'fel på n' });
   }
 });
 router.delete('/tasks/:id', authenticate, async (req, res) => {
@@ -62,12 +62,11 @@ router.delete('/tasks/:id', authenticate, async (req, res) => {
       return res.status(404).json({ error: 'Uppgift finns inte' });
     }
     await Task.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Uppgift raderad' });
+    return res.json({ message: 'Uppgift raderad' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Kunde inte radera uppgift' });
+    return res.status(500).json({ error: 'Kunde inte radera uppgift' });
   }
 });
-
 
 module.exports = router;
