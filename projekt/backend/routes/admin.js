@@ -71,12 +71,17 @@ router.post('/users', authenticate, checkAdmin, async (req, res) => {
 
     await newUser.save();
 
-    return res.status(201).json({ message: 'Användare skapad av admin', user: { username, email, role: newUser.role } });
+    const { _id } = newUser;
+    return res.status(201).json({ 
+      message: 'Användare skapad av admin', 
+      user: { _id, username, email, role: newUser.role } 
+    });
   } catch (err) {
     console.error('Kunde inte skapa användare', err);
     console.error('Full error object:', JSON.stringify(err, null, 2));
     return res.status(500).json({ message: 'Fel vid skapande av användare', error: err.message });
   }
 });
+
 
 module.exports = router;
