@@ -113,7 +113,7 @@ function UserManagement() {
   if (error) return <p>Fel: {error}</p>;
 
   return (
-    <div className="setup relative min-h-screen w-full bg-sky-100 p-6">
+    <div className="min-h-screen w-full bg-sky-100 p-6 flex flex-col items-center">
       <button className="panel-btn absolute top-4 left-2 z-10" onClick={() => navigate('/admin')}>
         Tillbaka
       </button>
@@ -121,76 +121,100 @@ function UserManagement() {
       <div className="max-w-4xl mx-auto p-8 bg-white rounded shadow">
         <h2 className="title text-center text-2xl font-bold w-full mb-6">Användare</h2>
 
-        <form onSubmit={handleAddUser} className="mb-6 ml-4 max-w-2xl flex gap-2 items-end border-b-2 border-gray-300">
-          <input
-            type="text"
-            placeholder="Användarnamn"
-            value={newUser.username}
-            onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={newUser.email}
-            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Lösenord"
-            value={newUser.password}
-            onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-            required
-          />
-          <select
-            value={newUser.role}
-            onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-          >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-          <button type="submit" className="panel-btn text-white rounded px-3 py-1 text-sm ml-7">
-            Lägg till användare
-          </button>
-        </form>
+    <form onSubmit={handleAddUser} className="flex flex-wrap gap-2 items-end border-b-2 border-gray-300 pb-3 mb-6">
+      <input
+        type="text"
+        placeholder="Användarnamn"
+        value={newUser.username}
+        onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+        required
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={newUser.email}
+        onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+        required
+      />
+      <input
+        type="password"
+        placeholder="Lösenord"
+        value={newUser.password}
+        onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+        required
+      />
+      <select
+        value={newUser.role}
+        onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+      >
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit" className="panel-btn text-white rounded px-3 py-1 text-sm ml-7">
+        Lägg till användare
+      </button>
+    </form>
 
-<div className="mt-8">
-        <table className="w-full table-fixed border-collapse">
-          <thead>
-            <tr>
-              <th>Namn</th>
-              <th>Email</th>
-              <th>Roll</th>
-              <th>Åtgärder</th>
+    <div className="mt-8">
+      <table className="hidden sm:table w-full border-collapse">
+        <thead>
+          <tr>
+            <th>Namn</th>
+            <th>Email</th>
+            <th>Roll</th>
+            <th>Åtgärder</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td className="border-2 border-solid m-1">{user.username}</td>
+              <td className="border-2 border-solid m-1 break-words">{user.email}</td>
+              <td className="border-2 border-solid m-1">{user.role}</td>
+              <td>
+                <button
+                  className="panel-btn font-mono px-3 py-1 text-sm"
+                  onClick={() => handleRoleChange(user._id, user.role)}
+                >
+                  Byt till {user.role === 'user' ? 'admin' : 'user'}
+                </button>
+                <button
+                  className="log-out-btn w-25 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 m-1"
+                  onClick={() => handleDelete(user._id)}
+                >
+                  Radera
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td className="border-2 border-solid m-1">{user.username}</td>
-                <td className="border-2 border-solid m-1">{user.email}</td>
-                <td className="border-2 border-solid m-1">{user.role}</td>
-                <td>
-                  <button
-                    className="panel-btn font-mono px-3 py-1 text-sm"
-                    onClick={() => handleRoleChange(user._id, user.role)}
-                  >
-                    Byt till {user.role === 'user' ? 'admin' : 'user'}
-                  </button>
-                  <button
-                    className="log-out-btn w-25 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 m-1"
-                    onClick={() => handleDelete(user._id)}
-                  >
-                    Radera
-                  </button>
-                </td>
-              </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="sm:hidden flex flex-col gap-4">
+        {users.map((user) => (
+          <div key={user._id} className="bg-white rounded shadow p-4 border">
+            <p><strong>Namn:</strong> {user.username}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Roll:</strong> {user.role}</p>
+            <div className="flex gap-2 mt-2 flex-wrap">
+              <button
+                className="panel-btn px-3 py-1 text-sm"
+                onClick={() => handleRoleChange(user._id, user.role)}
+              >
+                Byt till {user.role === 'user' ? 'admin' : 'user'}
+              </button>
+              <button
+                className="log-out-btn bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                onClick={() => handleDelete(user._id)}
+              >
+                Radera
+              </button>
+            </div>
+          </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
